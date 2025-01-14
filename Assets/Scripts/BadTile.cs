@@ -11,7 +11,6 @@ public class BadTile : NetworkBehaviour
         if (other.CompareTag("Player"))
         {
             Player player = other.GetComponent<Player>();
-
             if (player != null && !player.HasInteractedWithTile(this))
             {
                 Debug.Log("Player hit BadTile.");
@@ -26,7 +25,6 @@ public class BadTile : NetworkBehaviour
         if (other.CompareTag("Player"))
         {
             Player player = other.GetComponent<Player>();
-
             if (player != null)
             {
                 Debug.Log("Player left BadTile.");
