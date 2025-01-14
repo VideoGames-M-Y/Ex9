@@ -8,7 +8,7 @@ public class BallSpawner : NetworkBehaviour
     [SerializeField] float timeBetweenSpawns = 1f;
     [SerializeField] NetworkObject prefabToSpawn;
 
-    public override void Spawned() {}
+    public override void Spawned() { }
 
     public override void FixedUpdateNetwork()
     {
