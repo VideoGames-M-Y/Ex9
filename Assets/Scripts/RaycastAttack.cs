@@ -12,41 +12,34 @@ public class RaycastAttack : NetworkBehaviour
 
     [SerializeField] float shootDistance = 5f;
 
-    private void OnEnable() 
+    private void OnEnable()
     {
         attack.Enable();
         attackLocation.Enable();
     }
-
-    private void OnDisable() 
+    private void OnDisable()
     {
         attack.Disable();
         attackLocation.Disable();
     }
-
     void OnValidate()
     {
         // Provide default bindings for the input actions. Based on answer by DMGregory: https://gamedev.stackexchange.com/a/205345/18261
         if (attack == null)
             attack = new InputAction(type: InputActionType.Button);
-
         if (attack.bindings.Count == 0)
             attack.AddBinding("<Mouse>/leftButton");
 
         if (attackLocation == null)
             attackLocation = new InputAction(type: InputActionType.Value, expectedControlType: "Vector2");
-
         if (attackLocation.bindings.Count == 0)
             attackLocation.AddBinding("<Mouse>/position");
     }
 
     private bool _attackPressed;
-
     void Update()
-    {
-        // We have to read the button status in Update, because FixedNetworkUpdate might miss it.
+    {  // We have to read the button status in Update, because FixedNetworkUpdate might miss it.
         if (!HasStateAuthority) return;
-
         if (attack.WasPerformedThisFrame())
         {
             _attackPressed = true;
@@ -71,14 +64,12 @@ public class RaycastAttack : NetworkBehaviour
             {
                 GameObject hitObject = hit.transform.gameObject;
                 Debug.Log("Raycast hit: name=" + hitObject.name + " tag=" + hitObject.tag + " collider=" + hit.collider);
-
                 if (hitObject.TryGetComponent<Health>(out var health))
                 {
                     Debug.Log("Dealing damage");
                     health.DealDamageRpc(Damage);
                 }
             }
-
             _attackPressed = false;
         }
     }
