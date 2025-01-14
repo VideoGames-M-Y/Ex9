@@ -4,7 +4,8 @@ using UnityEngine;
 /**
  * This component represents a ball moving at a constant speed.
  */
-public class Ball: NetworkBehaviour {
+public class Ball : NetworkBehaviour
+{
     [Networked] private TickTimer lifeTimer { get; set; }
 
     [SerializeField] float lifeTime = 5.0f;
@@ -13,12 +14,13 @@ public class Ball: NetworkBehaviour {
     [SerializeField] int scorePerHit = 5;
     private Player owner;
 
-    public override void Spawned() {
+    public override void Spawned()
+    {
         lifeTimer = TickTimer.CreateFromSeconds(Runner, lifeTime);
     }
 
-    public override void FixedUpdateNetwork() {
-        //Debug.Log(lifeTimer);
+    public override void FixedUpdateNetwork()
+    {
         if (lifeTimer.Expired(Runner))
             Runner.Despawn(Object);
         else
@@ -40,11 +42,12 @@ public class Ball: NetworkBehaviour {
             if (hitPlayer != null && hitPlayer._hasShield)
             {
                 Debug.Log($"Player {hitPlayer.name} has a shield, no points awarded.");
-                hitPlayer.OnShieldHit();  // Optionally notify the player that their shield absorbed the hit
-                return;  // Exit without awarding points
+                hitPlayer.OnShieldHit();
+                return;
             }
-            else{
-                owner.IncreaseScoreRpc(scorePerHit); // Call the RPC method
+            else
+            {
+                owner.IncreaseScoreRpc(scorePerHit);
                 Debug.Log($"Score increased by {scorePerHit} for {owner.name}");
             }
         }
@@ -58,6 +61,4 @@ public class Ball: NetworkBehaviour {
     {
         owner = player;
     }
-
-
 }
