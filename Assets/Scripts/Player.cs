@@ -12,7 +12,7 @@ public class Player : NetworkBehaviour
 
     [SerializeField] private float speed = 5f;
     [SerializeField] private GameObject ballPrefab;
-     [Networked] public int Score { get; private set; } = 0;
+    [Networked] public int Score { get; private set; } = 0;
     [Networked] public bool _hasShield { get; private set; } = false;
 
     private Camera firstPersonCamera;
@@ -33,7 +33,9 @@ public class Player : NetworkBehaviour
             firstPersonCamera = Camera.main;
             var firstPersonCameraComponent = firstPersonCamera.GetComponent<FirstPersonCamera>();
             if (firstPersonCameraComponent && firstPersonCameraComponent.isActiveAndEnabled)
+            {
                 firstPersonCameraComponent.SetTarget(this.transform);
+            }
         }
     }
 
@@ -83,7 +85,7 @@ public class Player : NetworkBehaviour
     {
         _hasShield = value;
 
-        // // Update the player's material for the shield
+        // Update the player's material for the shield
         // if (playerRenderer != null && shieldMaterial != null)
         // {
         //     playerRenderer.material = value ? shieldMaterial : normalMaterial;
